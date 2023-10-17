@@ -3,6 +3,7 @@ import { UseState } from "./components/useState";
 import { UseEffect } from "./components/useEffect";
 import { CustomeHook } from "./components/CustomeHook";
 import { UseContext } from "./components/Contexts/UseContext";
+import { UseMemo } from "./components/usememo/UseMemo";
 
 function App() {
   return (
@@ -15,6 +16,8 @@ function App() {
       <CustomeHook />
       <hr/>
       <UseContext/>
+      <hr/>
+      <UseMemo/>
     </>
   );
 }

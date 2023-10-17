@@ -1,13 +1,28 @@
 import React, { createContext, useContext, useState } from "react";
-const ThemeContext = createContext("");
-const CurrentUserContext = createContext(null);
+
+const ThemeContext = createContext<string>("");
+
+interface IUser {
+  name: string;
+}
+
+interface IDemo {
+  currentUser: IUser | null;
+  setCurrentUser: (user: IUser | null) => void;
+}
+
+const CurrentUserContext = createContext<IDemo>({
+  currentUser: null,
+  setCurrentUser: () => {}
+});
 
 export const UseContext = () => {
   const [theme, setTheme] = useState("light");
-  const [currentUser, setCurrentUser] = useState(null);
+  const [currentUser, setCurrentUser] = useState<IUser | null>(null);
+
   return (
     <div>
-      <h1>Use Context </h1>
+      <h1>Use Context</h1>
       <ThemeContext.Provider value={theme}>
         <CurrentUserContext.Provider
           value={{
@@ -43,7 +58,7 @@ function WelcomePanel() {
 
 function Greeting() {
   const { currentUser } = useContext(CurrentUserContext);
-  return <p>You logged in as {currentUser.name}.</p>;
+  return <p>You logged in as {currentUser!.name}.</p>;
 }
 
 function LoginForm() {
@@ -51,10 +66,11 @@ function LoginForm() {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const canLogin = firstName !== "" && lastName !== "";
+
   return (
     <>
       <label>
-        First name{": "}
+        First name:{" "}
         <input
           required
           value={firstName}
@@ -62,7 +78,7 @@ function LoginForm() {
         />
       </label>
       <label>
-        Last name{": "}
+        Last name:{" "}
         <input
           required
           value={lastName}
